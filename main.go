@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 	"time"
 )
 
@@ -65,7 +66,12 @@ func logPerformance(blockNumber, gasPrice, peerCount string) {
     }
     defer f.Close()
 
-    logString := fmt.Sprintf("Block number: %s, Gas price: %s, Peer count: %s, Timestamp: %s\n", blockNumber, gasPrice, peerCount, time.Now().String())
+	blockNumberDec, _ := strconv.ParseInt(blockNumber, 0, 64)
+    gasPriceDec, _ := strconv.ParseInt(gasPrice, 0, 64)
+	peerCountDec, _ := strconv.ParseInt(peerCount, 0, 64)
+	
+    logString := fmt.Sprintf("Block number: %d, Gas price: %d, Peer count: %d, Timestamp: %s\n", blockNumberDec, gasPriceDec, peerCountDec, time.Now().String())
+
     if _, err := f.WriteString(logString); err != nil {
         log.Println(err)
     }
